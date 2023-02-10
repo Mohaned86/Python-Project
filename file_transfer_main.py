@@ -5,6 +5,9 @@ from tkinter import *
 import tkinter.filedialog
 import os
 import shutil
+import time
+
+#import file_transfer_func.py
 
 class ParentWindow(Frame):
     def __init__(self, master):
@@ -76,8 +79,10 @@ class ParentWindow(Frame):
         #Runs through each file in the source directory
         for i in source_files:
             #moves each file from the source to the destination
-            shutil.move(source + '/' + i, destination)
-            print(i + ' was successfully transferred.')
+            file_time = os.path.getmtime(source + '/' + i)
+            if((time.time() - file_time)/3600 < 24):
+                shutil.move(source + '/' + i, destination)
+                print(i + ' was successfully transferred.')
 
     #Creates function to exit program
     def exit_program(self):
